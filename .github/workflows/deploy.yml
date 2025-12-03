@@ -13,7 +13,7 @@ jobs:
       - name: Build frontend (optional)
         run: |
           cd frontend
-          npm ci
+          npm install
           npm run build
 
       - name: Upload repository to VPS
@@ -36,8 +36,8 @@ jobs:
           script: |
             set -e
             cd /var/www/pinta/backend
-            npm ci --production
+            npm install --production
             pm2 startOrRestart ecosystem.config.js --env production || pm2 start ecosystem.config.js
             cd /var/www/pinta/frontend
-            npm ci
+            npm install
             npm run build || true
