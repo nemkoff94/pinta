@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export default function AuthScreens(){
   const [role,setRole]=useState('client')
   const [username,setUsername]=useState('')
+  const [password,setPassword]=useState('')
   const [error,setError]=useState(null)
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -12,7 +13,7 @@ export default function AuthScreens(){
   const doLogin = async ()=>{
     setError(null)
     try{
-      const r = await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role,username})})
+      const r = await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})})
       const j = await r.json()
       if(j && j.ok){
         // store into auth context and redirect
@@ -22,7 +23,7 @@ export default function AuthScreens(){
         else if(j.role === 'cashier') navigate('/cashier')
         else navigate('/client')
       }else{
-        setError('Invalid response')
+        setError(j.error || 'Invalid response')
       }
     }catch(e){ setError('Network error') }
   }
@@ -31,6 +32,7 @@ export default function AuthScreens(){
     <div className="rounded-lg bg-white p-6 shadow space-y-4">
       <h2 className="text-2xl font-bold">Вход (демо)</h2>
       <input className="border p-2 w-full" placeholder="Имя" value={username} onChange={e=>setUsername(e.target.value)} />
+      <input type="password" className="border p-2 w-full mt-2" placeholder="Пароль" value={password} onChange={e=>setPassword(e.target.value)} />
       <select className="border p-2 w-full" value={role} onChange={e=>setRole(e.target.value)}>
         <option value="client">Клиент</option>
         <option value="cashier">Кассир</option>
