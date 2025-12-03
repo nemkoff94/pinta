@@ -1,0 +1,9 @@
+node_modules/
+frontend/dist/
+backend/data/
+.env
+.env.local
+/.vscode
+npm-debug.log
+pnpm-lock.yaml
+yarn.lock
