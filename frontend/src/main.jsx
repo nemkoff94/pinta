@@ -14,17 +14,21 @@ import { AuthProvider, useAuth } from './context/AuthContext'
 function Header(){
   const { user, logout } = useAuth()
   return (
-    <header className="p-4 bg-white shadow-sm">
-      <div className="max-w-4xl mx-auto flex gap-4 items-center">
-        <h1 className="text-xl font-semibold">Pinta</h1>
-        <nav className="ml-auto flex gap-3 items-center">
-          <Link to="/" className="text-sky-600">Лендинг</Link>
-          <Link to="/menu" className="text-sky-600">Меню</Link>
-          {!user && <Link to="/auth" className="text-sky-600">Войти</Link>}
+    <header className="sticky top-0 z-30 bg-white/70 backdrop-blur-md shadow-md border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center w-12 h-12 bg-sky-600 text-white rounded-full font-bold">P</div>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Pinta</h1>
+        </div>
+
+        <nav className="ml-auto flex items-center gap-6">
+          <Link to="/" className="text-slate-700 hover:text-sky-600 transition">Лендинг</Link>
+          <Link to="/menu" className="text-slate-700 hover:text-sky-600 transition">Меню</Link>
+          {!user && <Link to="/auth" className="px-3 py-1 rounded-md bg-sky-50 text-sky-600 hover:bg-sky-100 transition">Войти</Link>}
           {user && (
             <div className="flex items-center gap-3">
-              <span className="text-slate-600">{user.username} ({user.role})</span>
-              <button className="text-sm text-red-600" onClick={()=>logout()}>Выйти</button>
+              <span className="text-slate-600 text-sm">{user.username} <span className="text-xs text-slate-400">({user.role})</span></span>
+              <button className="px-3 py-1 rounded-md text-sm bg-red-50 text-red-600 hover:bg-red-100 transition" onClick={()=>logout()}>Выйти</button>
             </div>
           )}
         </nav>
@@ -38,7 +42,7 @@ function App(){
     <BrowserRouter>
       <div className="min-h-screen bg-slate-50 text-slate-800">
         <Header />
-        <main className="max-w-4xl mx-auto p-6">
+        <main className="w-full">
           <Routes>
             <Route path="/" element={<Landing/>} />
             <Route path="/menu" element={<Menu/>} />
